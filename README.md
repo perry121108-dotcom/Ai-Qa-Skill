@@ -233,6 +233,18 @@ PR 前用 AI 跑一次 QA，把 `qa-report.md` 貼進 PR description，省下 Co
 
 ---
 
+## 八-A、實戰案例（Case Studies）
+
+想看 Skill 跑完一輪後的真實輸出長什麼樣，請看 [case-studies/](case-studies/)。
+
+| 案例 | 專案類型 | 技術棧 | 內建測試 | QA 通過率 |
+|---|---|---|---|---:|
+| [clothes-ai](case-studies/clothes-ai/) | CLI 自動化工作流 | Python 3.12 + Gemini + Telegram | 65 / 65 pytest | 80.0% |
+
+> 每個案例含 8 份繁體中文 QA 報告（project-understanding / function-map / test-cases / evidence-log / bug-report / coverage-summary / qa-report / decision-log），全部由 AI 在不修改原專案程式碼的前提下產出。
+
+---
+
 ## 九、適用對象
 
 | 你是 | 你會用到的 |
