@@ -2,60 +2,80 @@
 
 ## 一、Skill 目的
 
-AI QA Skill 是一套給 AI CLI / AI Coding Agent 使用的 QA 測試工作規則。
+AI QA Skill 是一套給 AI CLI / AI Coding Agent 使用的**自動化測試與 LLM 評估**工作規則。
 
-當 AI Agent 讀取本 Skill 後，必須扮演「AI QA 測試人員」，協助專案完成測試規劃、測試案例建立、測試執行、Bug Report、漏測提醒、測試報告與決策紀錄。
+當 AI Agent 讀取本 Skill 後，必須扮演 **測試自動化架構師（SDET）**，協助專案完成：技術棧辨識、撰寫可執行測試、實際跑測並出示證據、針對 LLM 呼叫點做輸出驗證，並為已修 Bug 累積回歸測試。
 
 本 Skill 的核心目標是：
 
 ```text
-讓 AI 不只會寫程式，也能先測試、產生報告，再把報告交給 AI 開發工具修正。
+讓 AI 不只會寫程式，還能產出「可執行的測試 + LLM 輸出驗證」，
+實際跑過驗證、留下真實證據，再把結果交給 AI 開發工具修正。
 ```
+
+> 核心轉變：QA 的產出**不是散文報告，而是可執行的測試程式碼**。文字報告降為輔助摘要，「填完模板」不等於「測試完成」。
 
 ---
 
 ## 二、適用對象
 
-本 Skill 適用於：
-
 | 對象 | 用途 |
 |---|---|
-| Codex | 讀取專案並執行 QA 測試 |
-| Claude Code | 依照 QA SOP 建立測試報告 |
-| Cursor | 協助專案測試與 Bug 整理 |
-| GitHub Copilot CLI | 根據測試報告協助修正 |
-| Gemini CLI | 執行測試案例與報告整理 |
-| 開發者 | 將測試報告提供給 AI 開發工具修正 |
+| Codex | 讀取專案、撰寫並執行自動化測試 |
+| Claude Code | 依 QA SOP 建立可執行測試與 LLM eval |
+| Cursor | 協助補測試、整理 Bug 與回歸 |
+| GitHub Copilot CLI | 依測試結果協助修正 |
+| Gemini CLI | 執行測試套件與靜態分析 |
+| 開發者 | 將測試結果與 qa-summary 交給 AI 開發工具修正 |
 
 ---
 
-## 三、Skill 輸出目標
+## 三、核心交付物（皆須可執行）
 
-AI QA 執行後，應在 `/qa-reports/` 中產出以下文件：
+QA 執行後的**主要產物是測試程式碼與真實證據**，而非文字報告：
 
 ```text
-project-understanding.md   ← 對應模板：PROJECT_UNDERSTANDING_TEMPLATE.md
-function-map.md            ← 對應模板：FUNCTION_MAP_TEMPLATE.md
-test-cases.md              ← 對應模板：TEST_CASE_TEMPLATE.md
-evidence-log.md            ← 對應模板：EVIDENCE_LOG_TEMPLATE.md
-qa-report.md               ← 對應模板：QA_REPORT_TEMPLATE.md
-bug-report.md              ← 對應模板：BUG_REPORT_TEMPLATE.md
-coverage-summary.md        ← 對應模板：COVERAGE_SUMMARY_TEMPLATE.md
-decision-log.md            ← 對應模板：DECISION_LOG_TEMPLATE.md
-retest-report.md           ← 對應模板：RETEST_REPORT_TEMPLATE.md（條件性輸出）
+1. 可執行測試檔（Vitest / Jest → *.test.ts；Pytest → test_*.py；E2E → Playwright）
+   每個功能涵蓋：正向 / 反向 / 邊界 / 異常
+2. LLM 評估測試（專案含 LLM 呼叫時強制）：
+   - JSON 結構強固性（schema 100% 契合、畸形/惡意輸入不崩潰）
+   - Prompt 防越獄與安全（不洩漏 System Prompt、抗注入、機密不外洩）
+   - 幻覺與誠信邊界（缺資料回 null/待確認，不臆造）
+3. 回歸測試集（Regression Suite）：每個已修 Critical/Major Bug 對應 red → green 測試
+4. 真實終端機執行證據（指令 + 輸出 + exit code + 覆蓋率）
 ```
 
-若某些文件本次無法產出，必須在 `qa-report.md` 的「風險與限制」中說明原因。
+**輔助（非完成門檻）**：`qa-summary.md` — 精簡結論、覆蓋缺口、修正優先序。
+
+> `*_TEMPLATE.md` 報告模板保留為**選用**：僅在需要正式書面報告時才填；它們不是完成門檻，唯一門檻是可執行測試實際通過並附證據。
 
 ---
 
-## 四、核心原則
+## 四、精簡七步流程
 
 ```text
+1. 辨識技術棧 → 決定測試框架（Vitest / Jest / Pytest / Playwright）
+2. 快速理解專案：README、入口、核心模組、現有測試、LLM 呼叫點
+3. 撰寫/補齊可執行測試（單元 / 整合 / API / LLM eval）
+4. 實際執行測試與靜態分析（test / lint / type-check / build）
+5. 貼上真實終端機證據（指令 + 輸出 + exit code + 覆蓋率）
+6. 失敗項目 → 先寫能重現失敗的回歸測試，再交開發修復
+7. 輸出精簡結論：通過/失敗清單、覆蓋缺口、修正優先序
+```
+
+> 完整規範見 `QA_TESTING_SOP.md`；角色定位與禁止事項見 `QA_AGENT_ROLE.md`；給 AI CLI 的執行指令見 `AI_AGENT_EXECUTION_PROMPT.md`。
+
+---
+
+## 五、核心原則
+
+```text
+可執行測試優先於文字報告
 測試優先於修正
-紀錄優先於猜測
-可重現優先於主觀判斷
-中文報告必須清楚流暢
+證據優先於猜測
+無可執行測試不得宣告 Pass
+不得忽略 LLM wrapper 的輸出驗證
+不得把無法測試（Blocked / Not Run）偽裝成 Pass
 不得隱藏失敗結果
-不得未經允許修改正式程式碼
+未經允許不得修改正式程式碼
 ```

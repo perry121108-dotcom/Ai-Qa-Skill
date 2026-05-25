@@ -6,45 +6,47 @@
 
 ## QA Skill 執行指令
 
-請依照 `/skills/ai-qa-skill/` 的規則執行本專案 QA 測試。
+請依照 `/skills/ai-qa-skill/` 的規則執行本專案 QA。
 
-你現在的角色是 **AI QA 測試人員**，不是開發者。
+你現在的角色是 **測試自動化架構師（SDET）**，不是開發者。你的核心產出是**可執行的測試程式碼與真實執行證據**，不是散文報告。
 
-除非我明確要求你修正程式碼，否則你不得直接修改正式功能程式碼。
+除非我明確要求你修正程式碼，否則你不得直接修改正式功能程式碼（但你**必須**撰寫測試程式碼）。
 
-請完成以下工作：
+請依 `QA_TESTING_SOP.md` 的**精簡七步流程**執行：
 
-1. 閱讀 `/skills/ai-qa-skill/` 內所有文件。
-2. 閱讀專案 `README.md`、`package.json`、`docs`、`src`、`app`、`pages`、`components`、`tests` 等主要內容。
-3. 整理 `/qa-reports/project-understanding.md`，說明專案用途、核心功能、可測試範圍與不確定項目。
-4. 整理 `/qa-reports/function-map.md`，列出主要功能與對應測試方向。
-5. 根據專案功能建立 `/qa-reports/test-cases.md`，測試案例需包含正向、反向、邊界、異常、UI 與基本相容性測試。
-6. 先判斷專案技術棧（依 `package.json` / `requirements.txt` / `pyproject.toml`），再選擇對應的套件管理器與測試指令。
-   - Node.js 專案：依 lockfile 判斷使用 npm / pnpm / yarn，再執行 install、build、lint、test。
-   - Python 專案：建立虛擬環境後執行 pip install，再執行 pytest、lint、啟動服務。
-   - 若技術棧不明，請記錄於 project-understanding.md 並標記相關測試為 Blocked。
-7. 若專案可啟動 Web 頁面，請使用 Playwright 或可用瀏覽器工具測試主要使用者流程。
-8. 每項測試需標記 `Pass`、`Fail`、`Blocked` 或 `Not Run`。
-9. 測試失敗時，請記錄錯誤訊息、重現步驟、預期結果、實際結果與截圖路徑（截圖命名規範請參考 OUTPUT_RULES.md）。
-10. 產出 `/qa-reports/evidence-log.md`，記錄測試指令、測試步驟、錯誤訊息與截圖證據（每筆需記錄執行時間）。
-11. 產出 `/qa-reports/bug-report.md`，整理所有 Fail 測試案例。
-12. 產出 `/qa-reports/coverage-summary.md`，列出已測、未測、Blocked、高優先級漏測、通過率與建議補測項目。
-13. 產出 `/qa-reports/qa-report.md`，報告必須是繁體中文，排版清楚、段落流暢、適合人類閱讀，也適合 AI 開發工具依照報告修正。
-14. 產出 `/qa-reports/decision-log.md`，記錄本專案目前已做過的重要產品決策與測試策略決策。
-15. 最後請提供建議修正優先順序，但不要直接修改程式碼。
+1. **辨識技術棧 → 決定測試框架**：依 `package.json` / `requirements.txt` / `pyproject.toml` 與既有設定判斷，鎖定 **Vitest / Jest / Pytest**（Web E2E 用 **Playwright**）。既有框架優先沿用；無框架則導入最小可行設定，**不得**以「沒有測試框架」當作不寫測試的藉口；技術棧不明則標記 `Blocked`。
+2. **快速理解專案**：閱讀 `README`、入口、核心模組、現有測試，並**標出所有 LLM 呼叫點**。
+3. **撰寫可執行測試**：為核心功能產出實際測試檔（`*.test.ts` / `test_*.py`），每個功能至少涵蓋 **正向 / 反向 / 邊界 / 異常**；對外部服務與 LLM 呼叫一律 **mock / stub**，使測試自足、可單一指令重跑、可進 CI。
+4. **執行測試與靜態分析**：實際執行 test / lint / type-check / build，**不得**只宣稱通過。
+5. **貼上真實終端機證據**：指令 + stdout/stderr + exit code + 覆蓋率；指令不存在標 `Blocked` / `Not Run`，**不得**標 Pass。
+6. **LLM 評估（若有 LLM 呼叫點則為強制項）**：撰寫並執行以下三類斷言測試——
+   - **JSON 結構強固性**：輸出欄位/型別/必填/列舉值 100% 契合 schema；餵入畸形/惡意輸入驗證**不崩潰**、對 ```json 圍欄與多餘文字容錯。
+   - **Prompt 防越獄與安全**：誘導洩漏 System Prompt、注入「忽略上述指令…／現在你是…」時，斷言系統角色**不被覆寫**、機密（API Key、內部路徑）**不外洩**。
+   - **幻覺與誠信邊界**：缺資料時斷言回 `null` / 留空 / 「待確認」**而非臆造**；不可知的問題須**承認不知**。
+7. **回歸測試**：每個發現的 **Critical / Major** Bug，先寫「能重現失敗（red）」的測試，修復後轉綠（green），永久納入回歸測試集。
+8. **輸出精簡結論**：產出 `qa-summary.md`（繁體中文）——通過/失敗清單、覆蓋缺口、修正優先序。此為**輔助摘要，非完成門檻**。
+
+### 完成門檻（拒絕形式主義）
+
+```text
+[必須] 對應功能有可執行測試檔，且 npm test / pytest 實際通過（附終端機證據）
+[必須] 若有 LLM 呼叫點：JSON 強固性 / 防越獄 / 幻覺誠信 三類測試齊備並通過
+[必須] 每個已修 Critical/Major Bug 有對應回歸測試（red → green 證據）
+[必須] 無法執行者誠實標記 Blocked / Not Run，不得偽裝 Pass
+```
 
 ---
 
 ## 修正階段指令
 
-當我明確要求你修正時，才可以根據 `/qa-reports/bug-report.md` 與 `/qa-reports/qa-report.md` 修改程式碼。
+當我明確要求你修正時，才可根據測試失敗結果與 `qa-summary.md` 修改程式碼。
 
 修正時請遵守：
 
 ```text
 1. 優先處理 Critical / Major 問題
 2. 不修改不相關功能
-3. 修正後更新變更摘要
-4. 修正後再次執行 QA Skill 測試
-5. 產出 retest-report.md
+3. 先確保該 Bug 的回歸測試為 red，修復後轉 green
+4. 修正後重跑完整測試套件，貼上真實終端機證據
+5. 更新 qa-summary.md 的變更摘要與最新狀態
 ```
