@@ -1,19 +1,18 @@
-# AI QA Skill
+# AI QA Skill — SDET 自動化測試與 LLM 評估技能庫
 
-## 一、Skill 目的
+> **定位**：給 AI CLI / AI Coding Agent 使用的「測試自動化架構師（SDET）」核心技能庫。
+> 讀取本技能後，AI 不再只寫散文式報告，而是**產出可執行的測試程式碼 + LLM 輸出評估（Eval）+ 常駐回歸測試集**，並以真實終端機證據作為唯一完成標準。
 
-AI QA Skill 是一套給 AI CLI / AI Coding Agent 使用的**自動化測試與 LLM 評估**工作規則。
+---
 
-當 AI Agent 讀取本 Skill 後，必須扮演 **測試自動化架構師（SDET）**，協助專案完成：技術棧辨識、撰寫可執行測試、實際跑測並出示證據、針對 LLM 呼叫點做輸出驗證，並為已修 Bug 累積回歸測試。
+## 一、核心轉變
 
-本 Skill 的核心目標是：
-
-```text
-讓 AI 不只會寫程式，還能產出「可執行的測試 + LLM 輸出驗證」，
-實際跑過驗證、留下真實證據，再把結果交給 AI 開發工具修正。
-```
-
-> 核心轉變：QA 的產出**不是散文報告，而是可執行的測試程式碼**。文字報告降為輔助摘要，「填完模板」不等於「測試完成」。
+| 舊版（manual QA） | 新版（SDET 自動化） |
+|---|---|
+| 產出 9 份文字報告 | 產出**可執行測試檔**（Vitest / Pytest） |
+| 「填完模板」即完成 | **測試實際通過並附證據**才算完成 |
+| Bug 修了寫報告 | Bug 修正須留**永久回歸測試**（Red → Green） |
+| 不驗 AI 輸出 | 強制**三維度 LLM Evaluation** |
 
 ---
 
@@ -21,37 +20,55 @@ AI QA Skill 是一套給 AI CLI / AI Coding Agent 使用的**自動化測試與 
 
 | 對象 | 用途 |
 |---|---|
-| Codex | 讀取專案、撰寫並執行自動化測試 |
-| Claude Code | 依 QA SOP 建立可執行測試與 LLM eval |
-| Cursor | 協助補測試、整理 Bug 與回歸 |
-| GitHub Copilot CLI | 依測試結果協助修正 |
-| Gemini CLI | 執行測試套件與靜態分析 |
-| 開發者 | 將測試結果與 qa-summary 交給 AI 開發工具修正 |
+| Codex / Claude Code / Cursor | 讀取專案、撰寫並執行自動化測試 |
+| GitHub Copilot CLI / Gemini CLI | 執行測試套件、依結果協助修正 |
+| 開發者 | 將測試結果與 `qa-summary.md` 交給 AI 工具修正 |
 
 ---
 
 ## 三、核心交付物（皆須可執行）
 
-QA 執行後的**主要產物是測試程式碼與真實證據**，而非文字報告：
-
 ```text
-1. 可執行測試檔（Vitest / Jest → *.test.ts；Pytest → test_*.py；E2E → Playwright）
-   每個功能涵蓋：正向 / 反向 / 邊界 / 異常
-2. LLM 評估測試（專案含 LLM 呼叫時強制）：
-   - JSON 結構強固性（schema 100% 契合、畸形/惡意輸入不崩潰）
-   - Prompt 防越獄與安全（不洩漏 System Prompt、抗注入、機密不外洩）
-   - 幻覺與誠信邊界（缺資料回 null/待確認，不臆造）
-3. 回歸測試集（Regression Suite）：每個已修 Critical/Major Bug 對應 red → green 測試
+1. 可執行測試檔（Vitest/Jest → *.test.ts；Pytest → test_*.py；E2E → Playwright）
+   涵蓋：正向 / 反向 / 邊界 / 異常
+2. LLM 評估測試（專案含 LLM 呼叫時強制，見第五節）
+3. 回歸測試集（Regression Suite，見第四節）
 4. 真實終端機執行證據（指令 + 輸出 + exit code + 覆蓋率）
 ```
 
-**輔助（非完成門檻）**：`qa-summary.md` — 精簡結論、覆蓋缺口、修正優先序。
-
-> `*_TEMPLATE.md` 報告模板保留為**選用**：僅在需要正式書面報告時才填；它們不是完成門檻，唯一門檻是可執行測試實際通過並附證據。
+> 輔助（非完成門檻）：`qa-summary.md`（精簡結論、覆蓋缺口、修正優先序）。
 
 ---
 
-## 四、精簡七步流程
+## 四、⭐ 自動化回歸測試流（Red-to-Green 鐵律）
+
+Bug 修正**不能只填報告**，必須沉澱為永久測試：
+
+```
+1. 為該 Bug 先寫「能重現失敗」的測試   → 確認 RED（修復前確實失敗）
+2. 修復程式碼                          → 轉為 GREEN（修復後通過）
+3. 該測試永久保留進回歸測試集          → 防止復發
+```
+
+> 每個 **Critical / Major** Bug 都必須留下對應回歸測試；否則該 Bug **不得標記為 Closed**。常駐回歸測試集會隨專案演進持續累積，成為抵禦復發的安全網。
+
+---
+
+## 五、⭐ 三維度 LLM Evaluation（Guardrails）
+
+> 只要專案存在 LLM 呼叫點，以下三類測試為**強制項**，缺一不可宣告 Pass。
+
+| 維度 | 測試規範 |
+|------|---------|
+| **5.1 結構強固性**<br>(Schema Robustness) | AI 輸出 JSON 的欄位／型別／必填／列舉值 100% 契合 schema；餵入**畸形 JSON 圍欄**（未閉合、截斷、巢狀錯誤、惡意輸入）時系統**不得崩潰**，須優雅降級或回明確錯誤 |
+| **5.2 防越獄與安全**<br>(Jailbreak & Injection) | 對真實 System Prompt 做**錨點回歸守門**（確認防禦規則未被移除）；當輸入「忽略先前指令／現在你是…」等注入時，系統角色**不被覆寫**、機密（API Key、內部路徑）**不外洩** |
+| **5.3 誠信邊界**<br>(Hallucination & Honesty) | **缺乏資料時如實回傳 `null` / 留空 / 「待確認」**，而非自行臆造；對不可知的問題須**承認不知**，事實型輸出須可追溯來源 |
+
+> LLM 測試以**斷言式檢查**為主（schema 驗證、正則、關鍵字「不得出現」、golden output 比對）；非決定性輸出聚焦「結構與邊界」斷言，不依賴逐字相等。
+
+---
+
+## 六、精簡七步流程
 
 ```text
 1. 辨識技術棧 → 決定測試框架（Vitest / Jest / Pytest / Playwright）
@@ -63,19 +80,33 @@ QA 執行後的**主要產物是測試程式碼與真實證據**，而非文字�
 7. 輸出精簡結論：通過/失敗清單、覆蓋缺口、修正優先序
 ```
 
-> 完整規範見 `QA_TESTING_SOP.md`；角色定位與禁止事項見 `QA_AGENT_ROLE.md`；給 AI CLI 的執行指令見 `AI_AGENT_EXECUTION_PROMPT.md`。
+---
+
+## 七、完成門檻（拒絕形式主義）
+
+```text
+[必須] 對應功能有可執行測試檔，且 npm test / pytest 實際通過（附終端機證據）
+[必須] 若有 LLM 呼叫點：5.1 / 5.2 / 5.3 三類測試齊備並通過
+[必須] 每個已修 Critical/Major Bug 有對應回歸測試（Red → Green 證據）
+[必須] 無法執行者誠實標記 Blocked / Not Run，不得偽裝 Pass
+```
 
 ---
 
-## 五、核心原則
+## 八、技能庫文件結構
+
+| 檔案 | 內容 |
+|------|------|
+| `QA_AGENT_ROLE.md` | SDET 角色定位、禁止事項、測試狀態與 Severity / Priority 定義 |
+| `QA_TESTING_SOP.md` | 完整七步流程、框架對照、LLM 評估層、完成門檻 |
+| `AI_AGENT_EXECUTION_PROMPT.md` | 給各 AI CLI 的執行指令與修正階段守則 |
+| `*_TEMPLATE.md` | 選用的報告模板（非完成門檻） |
+
+---
+
+## 核心原則
 
 ```text
-可執行測試優先於文字報告
-測試優先於修正
-證據優先於猜測
-無可執行測試不得宣告 Pass
-不得忽略 LLM wrapper 的輸出驗證
-不得把無法測試（Blocked / Not Run）偽裝成 Pass
-不得隱藏失敗結果
-未經允許不得修改正式程式碼
+可執行測試優先於文字報告 · 測試優先於修正 · 證據優先於猜測
+無可執行測試不得宣告 Pass · 不得忽略 LLM 輸出驗證 · 不得隱藏失敗
 ```
