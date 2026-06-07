@@ -68,10 +68,29 @@ license: MIT
 | `QA_AGENT_ROLE.md` | 需要完整角色定位、禁止事項、Severity/Priority/Status 定義時 |
 | `QA_TESTING_SOP.md` | 需要完整七步流程、技術棧→框架對照、執行指令、LLM 評估細節時 |
 | `WEB_QA_RULES.md` | 測試 Web App / 網站 / 後台時 |
+| `API_QA_RULES.md` | 測試 REST / GraphQL / RPC 後端，需要可執行 API 測試範例時 |
+| `ACCESSIBILITY_QA_RULES.md` | 需要 axe-core 可執行無障礙（WCAG）測試時 |
 | `CLI_QA_RULES.md` | 用 AI CLI 驅動測試流程、技術棧判斷與指令集時 |
 | `OUTPUT_RULES.md` | 需要報告輸出位置、截圖命名規範時 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 要把執行指令貼給其他 AI Coding Agent 時 |
 | `*_TEMPLATE.md` | 選用的報告模板（非完成門檻） |
+
+---
+
+## 測試類型覆蓋與 Roadmap
+
+| 類型 | 狀態 | 依據檔案 |
+|------|------|---------|
+| 單元 / 整合（Vitest/Jest/Pytest） | ✅ 已支援 | `QA_TESTING_SOP.md` |
+| E2E（Playwright） | ✅ 已支援 | `WEB_QA_RULES.md` |
+| API（REST/GraphQL/RPC） | ✅ 已支援 | `API_QA_RULES.md` |
+| 無障礙（axe-core / WCAG） | ✅ 已支援 | `ACCESSIBILITY_QA_RULES.md` |
+| LLM 輸出評估（三維度） | ✅ 已支援 | 本檔 |
+| 效能 / 負載（k6 / JMeter） | 🚧 Roadmap | — |
+| 視覺回歸（screenshot diff） | 🚧 Roadmap | — |
+| 行動（Appium） | 🚧 Roadmap | — |
+| 契約測試（Pact） | 🚧 Roadmap | — |
+| Web 安全（OWASP） | 🚧 Roadmap | — |
 
 ---
 

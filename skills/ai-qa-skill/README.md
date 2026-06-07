@@ -42,6 +42,8 @@
 | `QA_AGENT_ROLE.md` | SDET 角色、禁止事項、Severity / Priority / Status 定義 | 參考 |
 | `QA_TESTING_SOP.md` | 技術棧→框架對照、測試生成鐵律、回歸、LLM 評估細節、執行指令 | 參考 |
 | `WEB_QA_RULES.md` | Web App / 網站 / 後台測試範圍 | 參考 |
+| `API_QA_RULES.md` | REST/GraphQL/RPC 後端可執行 API 測試範例 | 參考 |
+| `ACCESSIBILITY_QA_RULES.md` | axe-core / WCAG 可執行無障礙測試 | 參考 |
 | `CLI_QA_RULES.md` | AI CLI 驅動測試流程、技術棧判斷與指令集 | 參考 |
 | `OUTPUT_RULES.md` | 報告輸出位置、截圖命名規範 | 參考 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 貼給其他 AI Coding Agent 的執行/修正指令 | 選用 |

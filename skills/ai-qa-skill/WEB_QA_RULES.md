@@ -58,3 +58,13 @@ AI QA 測試人員需以人類使用者角度檢查主要流程是否可用。
 console 出現明顯錯誤
 API 回傳錯誤但前端無處理
 ```
+
+---
+
+## 五、延伸：可執行測試規範
+
+Web 流程的可執行測試請搭配：
+
+- **無障礙（WCAG / axe-core）**：見 [`ACCESSIBILITY_QA_RULES.md`](ACCESSIBILITY_QA_RULES.md)，把上表的無障礙概念落到 jest-axe / Playwright+axe 可執行測試。
+- **後端 API**：見 [`API_QA_RULES.md`](API_QA_RULES.md)，涵蓋正向/反向/邊界/異常與認證授權。
+- **E2E 主流程**：以 Playwright 撰寫 `e2e/*.spec.ts`，斷言核心使用者任務可完成。
