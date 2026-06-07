@@ -29,13 +29,15 @@ license: MIT
 
 ## ⭐ 三維度 LLM Evaluation（有 LLM 呼叫點時為強制項，缺一不可宣告 Pass）
 
-| 維度 | 斷言重點 |
-|------|---------|
-| **結構強固性** Schema Robustness | 輸出 JSON 的欄位／型別／必填／列舉值 100% 契合 schema；餵入畸形/截斷/惡意 JSON 不崩潰，能優雅降級；對 ` ```json ` 圍欄與多餘文字容錯 |
-| **防越獄與安全** Jailbreak & Injection | 注入「忽略上述指令…／現在你是…」時系統角色不被覆寫；System Prompt 與機密（API Key、內部路徑）不外洩 |
-| **誠信邊界** Hallucination & Honesty | 缺資料時如實回 `null`／留空／「待確認」而非臆造；不可知問題承認不知；事實型輸出可追溯來源 |
+| 維度 | OWASP LLM Top 10 (2025) | 斷言重點 |
+|------|------|---------|
+| **結構強固性** Schema Robustness | `LLM05` 輸出處理 | 輸出 JSON 的欄位／型別／必填／列舉值 100% 契合 schema；餵入畸形/截斷/惡意 JSON 不崩潰，能優雅降級；對 ` ```json ` 圍欄與多餘文字容錯 |
+| **防越獄與安全** Jailbreak & Injection | `LLM01` 提示注入<br>`LLM02` 機敏外洩<br>`LLM07` 系統提示外洩 | 注入「忽略上述指令…／現在你是…」時系統角色不被覆寫；System Prompt 與機密（API Key、內部路徑）不外洩 |
+| **誠信邊界** Hallucination & Honesty | `LLM09` 錯誤資訊 | 缺資料時如實回 `null`／留空／「待確認」而非臆造；不可知問題承認不知；事實型輸出可追溯來源 |
 
 > LLM 測試以斷言式檢查為主（schema 驗證、正則、關鍵字「不得出現」、golden output 比對），非決定性輸出聚焦結構與邊界，不依賴逐字相等。
+
+> **對標 OWASP LLM Top 10 (2025)**：三維度評估直接對應業界威脅模型——`LLM01` 提示注入、`LLM02` 機敏資訊外洩、`LLM05` 不當輸出處理、`LLM07` 系統提示外洩、`LLM09` 錯誤資訊。撰寫測試時建議於測試名稱或註解標註對應編號（如 `test_llm01_injection_role_not_overridden`），讓覆蓋面可追溯。
 
 ---
 
