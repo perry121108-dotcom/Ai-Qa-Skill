@@ -72,6 +72,7 @@ license: MIT
 | `WEB_QA_RULES.md` | 測試 Web App / 網站 / 後台時 |
 | `API_QA_RULES.md` | 測試 REST / GraphQL / RPC 後端，需要可執行 API 測試範例時 |
 | `ACCESSIBILITY_QA_RULES.md` | 需要 axe-core 可執行無障礙（WCAG）測試時 |
+| `LLM_ATTACK_CORPUS.md` + `corpus/` | 需要現成的注入/越獄/幻覺攻擊 payload（依 OWASP 分類）做三維度 eval 時 |
 | `CLI_QA_RULES.md` | 用 AI CLI 驅動測試流程、技術棧判斷與指令集時 |
 | `OUTPUT_RULES.md` | 需要報告輸出位置、截圖命名規範時 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 要把執行指令貼給其他 AI Coding Agent 時 |

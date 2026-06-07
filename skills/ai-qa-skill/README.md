@@ -44,6 +44,7 @@
 | `WEB_QA_RULES.md` | Web App / 網站 / 後台測試範圍 | 參考 |
 | `API_QA_RULES.md` | REST/GraphQL/RPC 後端可執行 API 測試範例 | 參考 |
 | `ACCESSIBILITY_QA_RULES.md` | axe-core / WCAG 可執行無障礙測試 | 參考 |
+| `LLM_ATTACK_CORPUS.md` + `corpus/` | 內建攻擊語料庫（注入/越獄/幻覺，依 OWASP 分類）+ 載入範例 | 參考 |
 | `CLI_QA_RULES.md` | AI CLI 驅動測試流程、技術棧判斷與指令集 | 參考 |
 | `OUTPUT_RULES.md` | 報告輸出位置、截圖命名規範 | 參考 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 貼給其他 AI Coding Agent 的執行/修正指令 | 選用 |
