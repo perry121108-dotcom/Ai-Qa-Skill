@@ -200,5 +200,7 @@ AI QA 會自動判斷技術棧並選對應指令集：
 MIT License — 自由使用、修改、商用、再散布。
 
 - GitHub: <https://github.com/perry121108-dotcom/Ai-Qa-Skill>
+- 發布說明: [`RELEASE_NOTES.md`](RELEASE_NOTES.md)
+- 對比與健檢: [`COMPARISON.md`](COMPARISON.md)
 - 技能庫入口: [`skills/ai-qa-skill/SKILL.md`](skills/ai-qa-skill/SKILL.md)
 - 舊版規格原稿（v2 手測式，僅供沿革參考）: [`ai_qa_skill_完整整合版.md`](ai_qa_skill_完整整合版.md)
