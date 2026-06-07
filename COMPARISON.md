@@ -63,7 +63,8 @@
 
 1. **三維度 LLM 輸出評估（對標 OWASP LLM Top 10 2025）** — 對比的熱門 repo **無一系統性測「AI 輸出本身」**（僅 neonwatty 摸到對抗測邊）。三軸直接對應 `LLM01` 提示注入、`LLM02` 機敏外洩、`LLM05` 不當輸出處理、`LLM07` 系統提示外洩、`LLM09` 錯誤資訊。這是 AI 時代的盲區，也是本 Skill 最強差異化。
 2. **Red→Green 寫進完成門檻 + 真實 worked example** — clothes-ai 案例完整展示「找缺口 → RED → 修 → GREEN → 99% 覆蓋」，比「範本 / 範例」更有說服力。
-3. **繁體中文在地化** — 中文圈唯一。
+3. **輕量、CI 原生** — LLM 評估是斷言式、住在你既有的 pytest/vitest，**不另裝掃描器、秒進 CI、天然納入回歸**，與 garak/PyRIT 等重型掃描器互補（需要深掃可橋接 promptfoo，見 `skills/ai-qa-skill/LLM_EVAL_TOOLING.md`）。
+4. **繁體中文在地化** — 中文圈唯一。
 
 ### 🟡 待補（純廣度，非缺陷）
 

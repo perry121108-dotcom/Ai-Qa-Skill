@@ -75,6 +75,7 @@ license: MIT
 | `LLM_ATTACK_CORPUS.md` + `corpus/` | 需要現成的注入/越獄/幻覺攻擊 payload（依 OWASP 分類）做三維度 eval 時 |
 | `SCHEMA_DRIFT_QA_RULES.md` | 需要偵測 AI 輸出契約漂移（欄位改名/型別變/必填消失）時 |
 | `GROUNDEDNESS_QA_RULES.md` | 需要做幻覺/誠信檢查（主張對 context 比對、缺資料不臆造）時 |
+| `LLM_EVAL_TOOLING.md` | 想了解本 Skill LLM 評估的定位，或橋接 promptfoo / garak / PyRIT 做深掃時 |
 | `CLI_QA_RULES.md` | 用 AI CLI 驅動測試流程、技術棧判斷與指令集時 |
 | `OUTPUT_RULES.md` | 需要報告輸出位置、截圖命名規範時 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 要把執行指令貼給其他 AI Coding Agent 時 |
