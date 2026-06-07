@@ -4,10 +4,12 @@
 
 本規則適用於 AI CLI / AI Coding Agent 協助測試專案時使用。
 
-CLI 版核心不是完整指令工具，而是建立以下流程：
+> 完整流程與完成門檻以 **[`SKILL.md`](SKILL.md)** 為準（executable-first）。本檔聚焦 CLI 情境下的**技術棧判斷與指令集**。
+
+CLI 版核心是建立以下閉環（以可執行測試為中心）：
 
 ```text
-AI 測試 → 產生報告 → AI 開發修正 → 再測試
+AI 撰寫可執行測試 → 實際執行並貼證據 → 失敗項先寫回歸測試 → AI 開發修正（Red→Green）→ 重跑
 ```
 
 ---
@@ -18,15 +20,15 @@ AI QA 需要依序執行：
 
 ```text
 1. 讀取專案結構
-2. 判斷技術棧
+2. 判斷技術棧（見二-A）
 3. 判斷可用指令
 4. 安裝依賴
-5. 執行 build
-6. 執行 lint
-7. 執行 test
-8. 啟動本地服務
-9. 使用 Playwright 或瀏覽器工具測試主要流程
-10. 輸出 Markdown 報告
+5. 撰寫/補齊可執行測試（單元/整合/API/LLM eval；外部相依一律 mock）
+6. 執行 build / lint / type-check
+7. 執行 test 並取得覆蓋率（附真實終端機證據）
+8. 需 E2E 時啟動本地服務，用 Playwright 測主要流程
+9. 失敗項目先寫「能重現失敗」的回歸測試（Red），交修復後轉 Green
+10. 輸出精簡結論 qa-summary.md（輔助，非完成門檻）
 ```
 
 ---
@@ -126,14 +128,15 @@ python manage.py runserver
 
 ---
 
-## 五、CLI 測試輸出
+## 五、CLI 測試輸出（executable-first）
 
-CLI 測試完成後，必須產出：
+CLI 測試的**完成依據是可執行測試實際通過 + 真實終端機證據**，不是產出 N 份報告：
 
 ```text
-qa-report.md
-bug-report.md
-coverage-summary.md
-evidence-log.md
-retest-report.md（條件性輸出：僅在有 Bug 已修正並需再測時產出）
+[必須] 可執行測試檔（*.test.ts / test_*.py），npm test / pytest 實際通過並附證據
+[必須] 有 LLM 呼叫點：三維度 LLM Evaluation 齊備（見 SKILL.md）
+[必須] 每個已修 Critical/Major Bug 有 Red→Green 回歸測試
+[輔助] qa-summary.md：通過/失敗清單、覆蓋缺口、修正優先序（精簡，非門檻）
 ```
+
+> 詳細報告模板（qa-report / bug-report / coverage-summary / evidence-log / retest-report）仍可選用，但「填完模板」不等於完成。輸出位置與截圖命名見 [`OUTPUT_RULES.md`](OUTPUT_RULES.md)。
