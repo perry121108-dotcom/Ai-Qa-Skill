@@ -48,6 +48,7 @@
 | `SCHEMA_DRIFT_QA_RULES.md` | AI 輸出契約漂移偵測（golden 簽章 + CI 比對） | 參考 |
 | `GROUNDEDNESS_QA_RULES.md` | 幻覺/誠信檢查（groundedness + LLM-as-judge + 不臆造） | 參考 |
 | `LLM_EVAL_TOOLING.md` | LLM 評估定位 + promptfoo/garak/PyRIT 橋接 | 參考 |
+| `DUPLICATION_QA_RULES.md` | AI 重複碼 / DRY 守門（附加功能，非核心門檻） | 附加 |
 | `CLI_QA_RULES.md` | AI CLI 驅動測試流程、技術棧判斷與指令集 | 參考 |
 | `OUTPUT_RULES.md` | 報告輸出位置、截圖命名規範 | 參考 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 貼給其他 AI Coding Agent 的執行/修正指令 | 選用 |
