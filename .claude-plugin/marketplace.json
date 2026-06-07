@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "ai-qa-skill-marketplace",
+  "description": "AI QA Skill 的 Claude Code 外掛市集——SDET 自動化測試與 LLM 輸出評估技能庫。",
+  "owner": {
+    "name": "perry121108",
+    "email": "perry121108@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "ai-qa-skill",
+      "source": "./",
+      "description": "SDET 自動化測試與 LLM 輸出評估技能庫：可執行測試 + 三維度 LLM eval + Red→Green 回歸；以真實終端機證據為完成標準。",
+      "version": "1.0.0",
+      "category": "testing",
+      "license": "MIT",
+      "homepage": "https://github.com/perry121108-dotcom/Ai-Qa-Skill",
+      "tags": ["qa", "sdet", "testing", "llm-evaluation", "regression", "accessibility"],
+      "author": {
+        "name": "perry121108"
+      }
+    }
+  ]
+}

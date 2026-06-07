@@ -62,7 +62,18 @@ your-project/
 
 ## 四、5 分鐘快速開始
 
-### Step 1 — 把 Skill 複製到你的專案
+### Step 1 — 安裝 Skill
+
+**方法 A：Claude Code 外掛市集（推薦）**
+
+```text
+/plugin marketplace add perry121108-dotcom/Ai-Qa-Skill
+/plugin install ai-qa-skill@ai-qa-skill-marketplace
+```
+
+安裝後 `ai-qa-skill` 技能會自動被探索，Claude 依任務情境自動觸發。
+
+**方法 B：手動複製到專案**
 
 ```bash
 git clone https://github.com/perry121108-dotcom/Ai-Qa-Skill.git

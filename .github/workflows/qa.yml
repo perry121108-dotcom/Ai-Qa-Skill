@@ -1,0 +1,87 @@
+# AI QA Skill — 範例 CI 工作流
+# 將本檔複製到你的專案 .github/workflows/qa.yml。
+# 對齊 SKILL.md 的完成門檻：實際執行 lint / type-check / test / coverage，並輸出測試覆蓋缺口。
+# 各步驟以檔案存在與否守門，Node 與 Python 專案皆可沿用。
+
+name: QA
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  node-qa:
+    name: Node QA (lint / test / coverage)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 偵測 Node 專案
+        id: detect
+        run: |
+          if [ -f package.json ]; then echo "node=true" >> "$GITHUB_OUTPUT"; else echo "node=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Setup Node
+        if: steps.detect.outputs.node == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 安裝依賴（依 lockfile 選套件管理器）
+        if: steps.detect.outputs.node == 'true'
+        run: |
+          if [ -f pnpm-lock.yaml ]; then corepack enable && pnpm install --frozen-lockfile; \
+          elif [ -f yarn.lock ]; then corepack enable && yarn install --frozen-lockfile; \
+          elif [ -f package-lock.json ]; then npm ci; \
+          else npm install; fi
+
+      - name: Lint（若有）
+        if: steps.detect.outputs.node == 'true'
+        run: npm run lint --if-present
+
+      - name: Type-check（若有）
+        if: steps.detect.outputs.node == 'true'
+        run: npm run typecheck --if-present
+
+      - name: Test + Coverage
+        if: steps.detect.outputs.node == 'true'
+        run: npm test --if-present -- --coverage
+
+      - name: 覆蓋缺口掃描（非阻塞）
+        if: steps.detect.outputs.node == 'true'
+        run: node skills/ai-qa-skill/scripts/find-untested.mjs . || true
+
+  python-qa:
+    name: Python QA (ruff / pytest / coverage)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 偵測 Python 專案
+        id: detect
+        run: |
+          if [ -f requirements.txt ] || [ -f pyproject.toml ] || [ -f setup.py ]; then \
+            echo "py=true" >> "$GITHUB_OUTPUT"; else echo "py=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Setup Python
+        if: steps.detect.outputs.py == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安裝依賴
+        if: steps.detect.outputs.py == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ] || [ -f setup.py ]; then pip install -e . || true; fi
+          pip install pytest pytest-cov ruff
+
+      - name: Ruff lint
+        if: steps.detect.outputs.py == 'true'
+        run: ruff check . || true
+
+      - name: Pytest + Coverage
+        if: steps.detect.outputs.py == 'true'
+        run: pytest -q --cov --cov-report=term-missing

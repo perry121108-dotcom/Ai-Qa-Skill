@@ -94,6 +94,15 @@ license: MIT
 
 ---
 
+## 輔助工具與 CI
+
+| 項目 | 路徑 | 用途 |
+|------|------|------|
+| 覆蓋缺口掃描腳本 | `skills/ai-qa-skill/scripts/find-untested.mjs` | 開工前快速找出沒有對應測試的原始檔（零相依 Node，`node skills/ai-qa-skill/scripts/find-untested.mjs [根目錄]`）。精確覆蓋率仍以 `npm test --coverage` / `pytest --cov` 為準。 |
+| CI 範例 | `.github/workflows/qa.yml` | Node + Python 的 lint / type-check / test / coverage 範例，可複製到目標專案。 |
+
+---
+
 ## 核心原則
 
 ```text
