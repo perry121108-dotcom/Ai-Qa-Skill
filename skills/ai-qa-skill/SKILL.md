@@ -29,13 +29,15 @@ license: MIT
 
 ## ⭐ 三維度 LLM Evaluation（有 LLM 呼叫點時為強制項，缺一不可宣告 Pass）
 
-| 維度 | 斷言重點 |
-|------|---------|
-| **結構強固性** Schema Robustness | 輸出 JSON 的欄位／型別／必填／列舉值 100% 契合 schema；餵入畸形/截斷/惡意 JSON 不崩潰，能優雅降級；對 ` ```json ` 圍欄與多餘文字容錯 |
-| **防越獄與安全** Jailbreak & Injection | 注入「忽略上述指令…／現在你是…」時系統角色不被覆寫；System Prompt 與機密（API Key、內部路徑）不外洩 |
-| **誠信邊界** Hallucination & Honesty | 缺資料時如實回 `null`／留空／「待確認」而非臆造；不可知問題承認不知；事實型輸出可追溯來源 |
+| 維度 | OWASP LLM Top 10 (2025) | 斷言重點 |
+|------|------|---------|
+| **結構強固性** Schema Robustness | `LLM05` 輸出處理 | 輸出 JSON 的欄位／型別／必填／列舉值 100% 契合 schema；餵入畸形/截斷/惡意 JSON 不崩潰，能優雅降級；對 ` ```json ` 圍欄與多餘文字容錯 |
+| **防越獄與安全** Jailbreak & Injection | `LLM01` 提示注入<br>`LLM02` 機敏外洩<br>`LLM07` 系統提示外洩 | 注入「忽略上述指令…／現在你是…」時系統角色不被覆寫；System Prompt 與機密（API Key、內部路徑）不外洩 |
+| **誠信邊界** Hallucination & Honesty | `LLM09` 錯誤資訊 | 缺資料時如實回 `null`／留空／「待確認」而非臆造；不可知問題承認不知；事實型輸出可追溯來源 |
 
 > LLM 測試以斷言式檢查為主（schema 驗證、正則、關鍵字「不得出現」、golden output 比對），非決定性輸出聚焦結構與邊界，不依賴逐字相等。
+
+> **對標 OWASP LLM Top 10 (2025)**：三維度評估直接對應業界威脅模型——`LLM01` 提示注入、`LLM02` 機敏資訊外洩、`LLM05` 不當輸出處理、`LLM07` 系統提示外洩、`LLM09` 錯誤資訊。撰寫測試時建議於測試名稱或註解標註對應編號（如 `test_llm01_injection_role_not_overridden`），讓覆蓋面可追溯。
 
 ---
 
@@ -70,6 +72,11 @@ license: MIT
 | `WEB_QA_RULES.md` | 測試 Web App / 網站 / 後台時 |
 | `API_QA_RULES.md` | 測試 REST / GraphQL / RPC 後端，需要可執行 API 測試範例時 |
 | `ACCESSIBILITY_QA_RULES.md` | 需要 axe-core 可執行無障礙（WCAG）測試時 |
+| `LLM_ATTACK_CORPUS.md` + `corpus/` | 需要現成的注入/越獄/幻覺攻擊 payload（依 OWASP 分類）做三維度 eval 時 |
+| `SCHEMA_DRIFT_QA_RULES.md` | 需要偵測 AI 輸出契約漂移（欄位改名/型別變/必填消失）時 |
+| `GROUNDEDNESS_QA_RULES.md` | 需要做幻覺/誠信檢查（主張對 context 比對、缺資料不臆造）時 |
+| `LLM_EVAL_TOOLING.md` | 想了解本 Skill LLM 評估的定位，或橋接 promptfoo / garak / PyRIT 做深掃時 |
+| `DUPLICATION_QA_RULES.md` | （附加）想擋 AI 複製貼上的重複碼 / DRY 守門時 |
 | `CLI_QA_RULES.md` | 用 AI CLI 驅動測試流程、技術棧判斷與指令集時 |
 | `OUTPUT_RULES.md` | 需要報告輸出位置、截圖命名規範時 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 要把執行指令貼給其他 AI Coding Agent 時 |
@@ -101,6 +108,8 @@ license: MIT
 | 項目 | 路徑 | 用途 |
 |------|------|------|
 | 覆蓋缺口掃描腳本 | `skills/ai-qa-skill/scripts/find-untested.mjs` | 開工前快速找出沒有對應測試的原始檔（零相依 Node，`node skills/ai-qa-skill/scripts/find-untested.mjs [根目錄]`）。精確覆蓋率仍以 `npm test --coverage` / `pytest --cov` 為準。 |
+| Schema 漂移偵測腳本 | `skills/ai-qa-skill/scripts/schema-signature.mjs` | 把 AI 輸出結構固化成 golden 簽章，CI 比對偵測欄位改名/型別漂移/必填消失（`... <output.json> --check golden.json`，漂移 exit 1）。詳見 `SCHEMA_DRIFT_QA_RULES.md`。 |
+| Groundedness 基線腳本 | `skills/ai-qa-skill/scripts/groundedness.mjs` | 逐條主張對 context 比對揪幻覺（`... input.json --threshold 0.6`，無依據 exit 1）。語意型主張改用 LLM-as-judge，詳見 `GROUNDEDNESS_QA_RULES.md`。 |
 | CI 範例 | `.github/workflows/qa.yml` | Node + Python 的 lint / type-check / test / coverage 範例，可複製到目標專案。 |
 
 ---

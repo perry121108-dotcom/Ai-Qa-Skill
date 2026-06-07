@@ -29,14 +29,14 @@
 ## 關鍵數據（真實終端機證據）
 
 ```text
-基線：            65 passed
-加三維度 eval：   87 passed, 2 xfailed   ← 2 個 RED bug 被測出
-修復後：          89 passed, 0 xfailed   ← Red→Green 完成
-outfit_generator.py 覆蓋率：99%（85 stmts, miss 1）
-src 整體覆蓋率：  57%（522 stmts, miss 227）
+基線：              65 passed
+加三維度 eval：     87 passed, 2 xfailed   ← 2 個 RED bug 被測出
+解析容錯修復後：    89 passed, 0 xfailed   ← Red→Green（BUG-LLM-001/002）
+加攻擊語料庫注入測試：107 passed           ← Red→Green（注入防護）
+outfit_generator.py 覆蓋率：99%
 ```
 
-demo 分支：`qa/optimized-retest`　commits：`576df94`（測試）→ `4fc479c`（修復）
+demo 分支：`qa/optimized-retest`　commits：`576df94`（測試）→ `4fc479c`（解析修復）→ `9807ed5`（注入防護）
 
 ---
 
@@ -46,8 +46,9 @@ demo 分支：`qa/optimized-retest`　commits：`576df94`（測試）→ `4fc479
 |---|---|---|---|
 | BUG-LLM-001 | Major | 解析端不容錯 ` ```json ` 圍欄 → JSONDecodeError | **RED → GREEN ✅** |
 | BUG-LLM-002 | Major | 解析端不容錯 JSON 前後多餘文字 | **RED → GREEN ✅** |
+| BUG-SEC-001 | Major | 注入向量無防護：使用者資料後缺指令再宣告（OWASP LLM01） | **RED → GREEN ✅** |
 
-詳見 [bug-report.md](bug-report.md)。
+詳見 [bug-report.md](bug-report.md) 與 [security-regression.md](security-regression.md)。
 
 ---
 
@@ -59,6 +60,7 @@ demo 分支：`qa/optimized-retest`　commits：`576df94`（測試）→ `4fc479
 | [test-plan.md](test-plan.md) | 測試計畫 + RTM 追溯矩陣 |
 | [qa-summary.md](qa-summary.md) | 精簡結論、覆蓋缺口、修正優先序 |
 | [bug-report.md](bug-report.md) | BUG-LLM-001/002 重現 + Red→Green 證據 |
+| [security-regression.md](security-regression.md) | 攻擊語料庫 × 注入防護 Red→Green（OWASP LLM01/02/07） |
 | [coverage-summary.md](coverage-summary.md) | 完整覆蓋率表 + 缺口與工具邊界說明 |
 | [evidence-log.md](evidence-log.md) | 真實終端機輸出（pytest / coverage / 掃描） |
 

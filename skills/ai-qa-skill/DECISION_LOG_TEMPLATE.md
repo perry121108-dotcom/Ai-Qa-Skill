@@ -59,10 +59,10 @@ Web UI、測試案例管理、報告輸出、漏測提醒。
 CLI 版定位為 AI QA CLI Tester，給開發者、AI Coding Agent 與 CI/CD 使用。
 
 **決策原因：**
-CLI 版可以讓 AI 測試流程接到 AI 開發流程，形成「AI 測試 → 產生報告 → AI 開發修正 → 再測試」的循環。
+CLI 版可以讓 AI 測試流程接到 AI 開發流程，形成「AI 撰寫可執行測試 → 執行並貼證據 → 失敗先寫回歸測試 → AI 開發修正（Red→Green）→ 重跑」的閉環。
 
 **影響範圍：**
-CLI 測試流程、Playwright 測試、Markdown 報告、AI 開發工具整合。
+CLI 測試流程、可執行測試與覆蓋率、Playwright E2E、AI 開發工具整合。
 
 **目前狀態：**
 已保存，暫不立即修改方案。

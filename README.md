@@ -5,7 +5,7 @@
 
 > 🎯 **定位**：**唯一系統性測「AI 輸出本身」的 QA Skill**——不只跑功能測試，還守住 AI 輸出的 **結構 / 安全 / 誠信**（三維度 LLM Evaluation），並用真實終端機證據作為唯一完成標準。
 
-> ⭐ **實戰作品**：[clothes-ai 重測案例](case-studies/clothes-ai/optimized/) — 對一個 Python + Gemini 專案套用本 Skill，新增 **22 個三維度 LLM 評估測試**、找到並修復 **2 個解析缺口（Red→Green）**、LLM 呼叫點覆蓋率 **99%**、全套件 **89 passed**。
+> ⭐ **實戰作品**：[clothes-ai 重測案例](case-studies/clothes-ai/optimized/) — 對一個 Python + Gemini 專案套用本 Skill，新增**三維度 LLM 評估 + 攻擊語料庫注入測試**、找到並修復 **4 個缺口（含解析容錯與注入防護，Red→Green）**、LLM 呼叫點覆蓋率 **99%**、全套件 **107 passed**。
 
 ---
 
@@ -39,6 +39,16 @@ AI QA（寫測試 + 跑測試 + 留證據） → 交出失敗清單 → AI Dev �
 | ⭐ **Red→Green 回歸鐵律** | Bug 修正不能只寫報告，必須先寫能重現失敗（red）的測試，修復後轉綠（green），永久納入回歸測試集。 |
 | ⭐ **Executable-first 反形式主義** | 要真實終端機證據（stdout / exit code / coverage）才算 Pass；無法執行者誠實標 Blocked / Not Run，**不得偽裝 Pass**。 |
 | **繁體中文在地化** | 人類可讀結論（`qa-summary.md`）一律繁體中文。 |
+
+> 📊 **與 GitHub 熱門 QA skill 的完整差異表、項目健檢與優劣勢** → 見 [COMPARISON.md](COMPARISON.md)
+
+### 優勢 / 待補（摘要）
+
+| 🏆 優勢（市場真空） | 🟡 待補（純廣度，非缺陷） |
+|---|---|
+| 三維度 LLM 輸出評估（對比 5 個熱門 repo 皆無） | 框架廣度：尚缺 k6 / 視覺 / Appium / Pact（roadmap） |
+| Red→Green 寫進完成門檻 + 真實 worked example（99% 覆蓋） | 多 agent 分工：目前單一 SDET 角色 |
+| 繁體中文在地化（中文圈唯一） | 社群熱度：新 repo，待曝光累積 |
 
 ---
 
@@ -152,7 +162,7 @@ AI QA 會自動判斷技術棧並選對應指令集：
 
 | 案例 | 風格 | 技術棧 | 結果 | 亮點 |
 |---|---|---|---|---|
-| ⭐ [clothes-ai/optimized](case-studies/clothes-ai/optimized/) | **executable-first** | Python 3.12 + Gemini + Telegram | **89 passed, 0 xfailed** | 22 個三維度 LLM eval、Red→Green 修復 2 bug、LLM 點覆蓋率 99% |
+| ⭐ [clothes-ai/optimized](case-studies/clothes-ai/optimized/) | **executable-first** | Python 3.12 + Gemini + Telegram | **107 passed** | 三維度 LLM eval + 攻擊語料庫注入測試、Red→Green 修復 4 bug、LLM 點覆蓋率 99% |
 | [clothes-ai](case-studies/clothes-ai/) | 手測式（舊版對照） | 同上 | 65 / 65 pytest | 8 份中文報告，保留作進化對照 |
 
 > 主打案例完整展示本 Skill 的核心閉環：**辨識技術棧 → 寫可執行測試 → 三維度 LLM 評估 → 發現缺口 → RED 重現 → 修復 → GREEN 永久回歸**，全程附真實終端機證據。
@@ -190,5 +200,7 @@ AI QA 會自動判斷技術棧並選對應指令集：
 MIT License — 自由使用、修改、商用、再散布。
 
 - GitHub: <https://github.com/perry121108-dotcom/Ai-Qa-Skill>
+- 發布說明: [`RELEASE_NOTES.md`](RELEASE_NOTES.md)
+- 對比與健檢: [`COMPARISON.md`](COMPARISON.md)
 - 技能庫入口: [`skills/ai-qa-skill/SKILL.md`](skills/ai-qa-skill/SKILL.md)
-- 歷史封存（舊架構，僅供對照）: [`archive/ai_qa_skill_完整整合版.md`](archive/ai_qa_skill_完整整合版.md)
+- 舊版規格原稿（v2 手測式，僅供沿革參考）: [`archive/ai_qa_skill_完整整合版.md`](archive/ai_qa_skill_完整整合版.md)

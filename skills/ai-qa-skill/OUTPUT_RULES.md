@@ -53,21 +53,26 @@
 
 ---
 
-## 二、輸出文件
+## 二、輸出文件（executable-first）
 
-每次 QA 測試建議產出：
+完成依據是**可執行測試 + 真實終端機證據**（見 [`SKILL.md`](SKILL.md)），文字報告為輔助：
 
 ```text
-project-understanding.md
-function-map.md
-test-cases.md
-evidence-log.md
-qa-report.md
-bug-report.md
-coverage-summary.md
-decision-log.md
-retest-report.md（條件性輸出：僅在有 Bug 已修正並需再測時產出，首次測試不強制）
+[主要產出 · 完成門檻]
+  可執行測試檔（*.test.ts / test_*.py，含三維度 LLM eval、Red→Green 回歸）
+  真實終端機證據（指令 + 輸出 + exit code + 覆蓋率）
+
+[輔助結論 · 建議]
+  qa-summary.md（通過/失敗清單、覆蓋缺口、修正優先序）
+
+[選用報告 · 非完成門檻]
+  project-understanding.md / function-map.md / test-cases.md / evidence-log.md
+  qa-report.md / bug-report.md / coverage-summary.md / decision-log.md
+  requirements.md / test-plan.md（含 RTM）
+  retest-report.md（條件性：僅在有 Bug 已修正並需再測時產出）
 ```
+
+> 選用報告若要產出，仍遵守本檔的命名/位置/語言規範；但「填完模板」不等於「測試完成」。
 
 ---
 
@@ -107,6 +112,8 @@ Bug 可重現
 ## 五、不可接受的輸出
 
 ```text
+宣稱 Pass 卻沒有可執行測試與真實終端機證據
+有 LLM 呼叫點卻略過三維度 LLM Evaluation
 只有一句話結論
 只有英文
 只有零散表格
