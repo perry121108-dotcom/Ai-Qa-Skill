@@ -1,9 +1,9 @@
 # AI QA Skill 文件包完整生成規格（整合版 v2）
 
-> ⚠️ **歷史版本（v2，手測式文件包規格）**
-> 本文件描述的是**舊版「產出 9 份文字報告」的手測流程**，已被 **executable-first / SDET 版本取代**。
-> **現行權威規格請以 [`skills/ai-qa-skill/SKILL.md`](skills/ai-qa-skill/SKILL.md) 為準**（核心產出＝可執行測試 + 三維度 LLM 評估 + Red→Green 回歸 + 真實終端機證據）。
-> 本檔保留作為歷史沿革與設計脈絡參考，不代表目前的完成門檻。
+> ⚠️ **已封存（Archived）**：本檔描述的是**舊架構**（AI 扮演「QA 測試人員」、產出散文式中文報告與手寫測試案例）。
+> 專案已優化為 **SDET／executable-first** 方向——以可執行測試與真實終端機證據為唯一完成門檻。
+> 現行規格請以 [`skills/ai-qa-skill/SKILL.md`](../skills/ai-qa-skill/SKILL.md) 及拆分後的各 `skills/ai-qa-skill/*.md` 為準。
+> 本檔僅保留作**歷史與進化對照**，請勿再依此生成或執行。
 
 > 本文件為原始規格與缺漏補充的完整整合版本，共涵蓋 7 項補充修正。
 
