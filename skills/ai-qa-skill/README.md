@@ -47,7 +47,9 @@
 | `CLI_QA_RULES.md` | AI CLI 驅動測試流程、技術棧判斷與指令集 | 參考 |
 | `OUTPUT_RULES.md` | 報告輸出位置、截圖命名規範 | 參考 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 貼給其他 AI Coding Agent 的執行/修正指令 | 選用 |
-| `*_TEMPLATE.md` | 選用的報告模板（非完成門檻） | 選用 |
+| `REQUIREMENTS_TEMPLATE.md` | 需求文件範本（含驗收條件、REQ-XXX 追溯編號） | 選用 |
+| `TEST_PLAN_TEMPLATE.md` | 測試計畫範本（含進入/退出準則、RTM 追溯矩陣） | 選用 |
+| `*_TEMPLATE.md` | 其餘報告模板（測試案例 / Bug / QA 報告等，非完成門檻） | 選用 |
 
 ---
 

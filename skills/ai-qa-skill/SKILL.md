@@ -73,7 +73,9 @@ license: MIT
 | `CLI_QA_RULES.md` | 用 AI CLI 驅動測試流程、技術棧判斷與指令集時 |
 | `OUTPUT_RULES.md` | 需要報告輸出位置、截圖命名規範時 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 要把執行指令貼給其他 AI Coding Agent 時 |
-| `*_TEMPLATE.md` | 選用的報告模板（非完成門檻） |
+| `REQUIREMENTS_TEMPLATE.md` | 需要釐清需求、建立可追溯需求編號（REQ-XXX）時 |
+| `TEST_PLAN_TEMPLATE.md` | 需要測試計畫、進入/退出準則與 RTM 追溯矩陣時 |
+| `*_TEMPLATE.md` | 其餘選用的報告模板（測試案例 / Bug / QA 報告等，非完成門檻） |
 
 ---
 
