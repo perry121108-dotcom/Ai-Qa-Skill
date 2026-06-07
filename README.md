@@ -191,4 +191,4 @@ MIT License — 自由使用、修改、商用、再散布。
 
 - GitHub: <https://github.com/perry121108-dotcom/Ai-Qa-Skill>
 - 技能庫入口: [`skills/ai-qa-skill/SKILL.md`](skills/ai-qa-skill/SKILL.md)
-- 完整規格原稿: [`ai_qa_skill_完整整合版.md`](ai_qa_skill_完整整合版.md)
+- 歷史封存（舊架構，僅供對照）: [`archive/ai_qa_skill_完整整合版.md`](archive/ai_qa_skill_完整整合版.md)
