@@ -2,15 +2,31 @@
 
 這裡放 AI QA Skill 在真實專案上跑完一輪後的完整輸出，作為 Skill 用法的具體證據。
 
-每個案例包含 8–9 份繁體中文報告，全部由 AI 在不修改正式程式碼的前提下產出。
+案例分兩種風格：**手測式**（產出文字報告、不改程式碼）與 ⭐ **executable-first**（產出可執行測試、含三維度 LLM 評估與 Red→Green 回歸）。
+
+---
+
+## ⭐ 主打案例：clothes-ai（executable-first 重測）
+
+> [clothes-ai/optimized/](clothes-ai/optimized/) — 用優化後的 Skill 對同一專案重跑一次的完整紀錄。
+
+| 重點 | 數據 |
+|---|---|
+| 新增三維度 LLM 評估測試 | 22 個（schema 強固性 / 防越獄注入 / 幻覺誠信） |
+| 找到並修復解析缺口 | BUG-LLM-001 / 002（**Red → Green** 回歸） |
+| LLM 呼叫點覆蓋率 | **99%**（`outfit_generator.py`） |
+| 全套件 | **89 passed, 0 xfailed** |
+
+這正是本 Skill 的差異化：**唯一系統性測「AI 輸出本身」的 QA 流程**——不只跑功能測試，還守住 AI 輸出的結構、安全與誠信。
 
 ---
 
 ## 案例清單
 
-| 案例 | 專案類型 | 技術棧 | 內建測試 | QA 通過率 | 重點觀察 |
-|---|---|---|---|---:|---|
-| [clothes-ai/](clothes-ai/) | CLI 自動化工作流 | Python 3.12 + asyncio + Playwright + Gemini API + Telegram Bot | **65 / 65 pytest** | 80.0% | 工程品質達作品集級別；主要待修為「文件 vs 實作」落差 |
+| 案例 | 風格 | 技術棧 | 測試 | 重點觀察 |
+|---|---|---|---|---|
+| ⭐ [clothes-ai/optimized/](clothes-ai/optimized/) | **executable-first** | Python 3.12 + Gemini + Telegram | **89 passed**（+22 LLM eval） | 三維度 eval + Red→Green，LLM 點覆蓋率 99% |
+| [clothes-ai/](clothes-ai/) | 手測式（舊版對照） | 同上 | 65 / 65 pytest | 8 份中文報告；保留作進化對照 |
 
 > 更多案例陸續補上。
 
