@@ -40,6 +40,16 @@ AI QA（寫測試 + 跑測試 + 留證據） → 交出失敗清單 → AI Dev �
 | ⭐ **Executable-first 反形式主義** | 要真實終端機證據（stdout / exit code / coverage）才算 Pass；無法執行者誠實標 Blocked / Not Run，**不得偽裝 Pass**。 |
 | **繁體中文在地化** | 人類可讀結論（`qa-summary.md`）一律繁體中文。 |
 
+> 📊 **與 GitHub 熱門 QA skill 的完整差異表、項目健檢與優劣勢** → 見 [COMPARISON.md](COMPARISON.md)
+
+### 優勢 / 待補（摘要）
+
+| 🏆 優勢（市場真空） | 🟡 待補（純廣度，非缺陷） |
+|---|---|
+| 三維度 LLM 輸出評估（對比 5 個熱門 repo 皆無） | 框架廣度：尚缺 k6 / 視覺 / Appium / Pact（roadmap） |
+| Red→Green 寫進完成門檻 + 真實 worked example（99% 覆蓋） | 多 agent 分工：目前單一 SDET 角色 |
+| 繁體中文在地化（中文圈唯一） | 社群熱度：新 repo，待曝光累積 |
+
 ---
 
 ## 三、目錄結構
