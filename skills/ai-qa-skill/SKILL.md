@@ -74,6 +74,7 @@ license: MIT
 | `ACCESSIBILITY_QA_RULES.md` | 需要 axe-core 可執行無障礙（WCAG）測試時 |
 | `LLM_ATTACK_CORPUS.md` + `corpus/` | 需要現成的注入/越獄/幻覺攻擊 payload（依 OWASP 分類）做三維度 eval 時 |
 | `SCHEMA_DRIFT_QA_RULES.md` | 需要偵測 AI 輸出契約漂移（欄位改名/型別變/必填消失）時 |
+| `GROUNDEDNESS_QA_RULES.md` | 需要做幻覺/誠信檢查（主張對 context 比對、缺資料不臆造）時 |
 | `CLI_QA_RULES.md` | 用 AI CLI 驅動測試流程、技術棧判斷與指令集時 |
 | `OUTPUT_RULES.md` | 需要報告輸出位置、截圖命名規範時 |
 | `AI_AGENT_EXECUTION_PROMPT.md` | 要把執行指令貼給其他 AI Coding Agent 時 |
@@ -106,6 +107,7 @@ license: MIT
 |------|------|------|
 | 覆蓋缺口掃描腳本 | `skills/ai-qa-skill/scripts/find-untested.mjs` | 開工前快速找出沒有對應測試的原始檔（零相依 Node，`node skills/ai-qa-skill/scripts/find-untested.mjs [根目錄]`）。精確覆蓋率仍以 `npm test --coverage` / `pytest --cov` 為準。 |
 | Schema 漂移偵測腳本 | `skills/ai-qa-skill/scripts/schema-signature.mjs` | 把 AI 輸出結構固化成 golden 簽章，CI 比對偵測欄位改名/型別漂移/必填消失（`... <output.json> --check golden.json`，漂移 exit 1）。詳見 `SCHEMA_DRIFT_QA_RULES.md`。 |
+| Groundedness 基線腳本 | `skills/ai-qa-skill/scripts/groundedness.mjs` | 逐條主張對 context 比對揪幻覺（`... input.json --threshold 0.6`，無依據 exit 1）。語意型主張改用 LLM-as-judge，詳見 `GROUNDEDNESS_QA_RULES.md`。 |
 | CI 範例 | `.github/workflows/qa.yml` | Node + Python 的 lint / type-check / test / coverage 範例，可複製到目標專案。 |
 
 ---
