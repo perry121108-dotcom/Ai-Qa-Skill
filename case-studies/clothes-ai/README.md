@@ -2,6 +2,17 @@
 
 > AI QA Skill 套用在 [clothes AI](https://github.com/perry121108-dotcom/clothes-AI) 的完整輸出。
 
+> ⭐ **新版（executable-first）重測已上線** → [optimized/](optimized/)
+> 用優化後的 Skill 對同一專案重跑：新增三維度 LLM eval、找到並修復 2 個解析缺口（Red→Green）、LLM 呼叫點覆蓋率 99%、全套件 89 passed。
+> 本頁為**舊版（手測式 8 份報告）原樣保留**，作為進化對照。
+
+| | 舊版（本頁） | 新版（[optimized/](optimized/)） |
+|---|---|---|
+| 核心產出 | 8 份文字報告 | 可執行測試 + 摘要 |
+| LLM 輸出驗證 | 無 | 22 個三維度測試 |
+| Bug 處理 | 寫報告 | Red→Green 回歸 |
+| 完成依據 | 模板 | pytest + coverage 證據 |
+
 ---
 
 ## 受測專案簡介

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "ai-qa-skill",
+  "displayName": "AI QA Skill (SDET)",
+  "version": "1.0.0",
+  "description": "SDET 自動化測試與 LLM 輸出評估技能庫。產出可執行測試（Vitest/Jest/Pytest/Playwright）、API 與 axe-core 無障礙測試、三維度 LLM 輸出評估，以及 Red→Green 回歸測試集；以真實終端機證據為唯一完成標準。",
+  "author": {
+    "name": "perry121108",
+    "url": "https://github.com/perry121108-dotcom"
+  },
+  "homepage": "https://github.com/perry121108-dotcom/Ai-Qa-Skill",
+  "repository": "https://github.com/perry121108-dotcom/Ai-Qa-Skill",
+  "license": "MIT",
+  "keywords": [
+    "qa",
+    "testing",
+    "sdet",
+    "test-automation",
+    "llm-evaluation",
+    "vitest",
+    "pytest",
+    "playwright",
+    "accessibility",
+    "regression"
+  ]
+}
